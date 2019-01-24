@@ -26,7 +26,6 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
     lateinit var registrationPresenter: RegistrationPresenter
 
     var selectedPhotoUri: Uri? = null
-    var placeholderUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

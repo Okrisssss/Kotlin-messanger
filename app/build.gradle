@@ -19,7 +19,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "PICK_IMAGE", '"PICK_IMAGE"'
-        buildConfigField "String", "COMPANION_KEY", '"chatCompanion"'
+        buildConfigField "String", "COMPANION_KEY", '"COMPANION_KEY"'
+        buildConfigField "String", "CURRENT_USER_KEY", '"CURRENT_USER_KEY"'
+        buildConfigField "String", "CURRENT_USER_AND_MESSAGE_KEY", '"CURRENT_USER_AND_MESSAGE_KEY"'
     }
     buildTypes {
         release {

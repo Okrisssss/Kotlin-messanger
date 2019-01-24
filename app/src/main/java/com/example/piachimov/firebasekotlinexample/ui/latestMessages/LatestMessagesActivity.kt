@@ -2,12 +2,17 @@ package com.example.piachimov.firebasekotlinexample.ui.latestMessages
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import com.example.piachimov.firebasekotlinexample.R
 import com.example.piachimov.firebasekotlinexample.di.Injector
+import com.example.piachimov.firebasekotlinexample.model.Message
 import com.example.piachimov.firebasekotlinexample.ui.newMessage.NewMessageActivity
 import com.example.piachimov.firebasekotlinexample.utils.ScreenNavigation
+import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_latest_message.*
 import javax.inject.Inject
 
 class LatestMessagesActivity : AppCompatActivity(), LatestMessagesView {
@@ -22,6 +27,8 @@ class LatestMessagesActivity : AppCompatActivity(), LatestMessagesView {
         setContentView(R.layout.activity_latest_message)
         Injector.initLatestMessagesActivityComponent(this)
         Injector.latestMessagesActivityComponent?.inject(this)
+        initRecyclerView()
+        latestMessagesPresenter.listenForLatestMessages()
     }
 
 
@@ -43,14 +50,19 @@ class LatestMessagesActivity : AppCompatActivity(), LatestMessagesView {
         return super.onOptionsItemSelected(item)
     }
 
+    fun initRecyclerView() {
+        latest_message_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        latest_message_recycler_view.adapter = latestMessageRecyclerAdapter
+    }
 
-    override fun onSuccess(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    override fun onSuccess(messageList: ArrayList<Message>) {
+        latestMessageRecyclerAdapter.showLatestMessagesList(messageList)
     }
 
 
     override fun onFailure(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 

@@ -42,7 +42,7 @@ class RegistrationPresenter(var registrationView: RegistrationView, var context:
         refStorage?.putFile(selectedPhotoUri)?.addOnSuccessListener {
             registrationView.onPhotoUploadedSuccess("Photo was uploaded successfully")
             refStorage?.downloadUrl?.addOnSuccessListener { it ->
-                val userId = refUsers?.push()?.key
+                val userId = mAuth!!.uid
                 val user = User(userId!!, name, it.toString())
                 refUsers?.child(userId)?.setValue(user)
             } }?.addOnFailureListener {

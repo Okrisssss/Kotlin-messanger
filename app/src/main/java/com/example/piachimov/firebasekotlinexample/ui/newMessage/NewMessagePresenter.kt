@@ -3,20 +3,26 @@ package com.example.piachimov.firebasekotlinexample.ui.newMessage
 import android.content.Context
 import com.example.piachimov.firebasekotlinexample.di.Injector
 import com.example.piachimov.firebasekotlinexample.model.User
-import com.example.piachimov.firebasekotlinexample.ui.latestMessages.LatestMessagesActivity
-import com.example.piachimov.firebasekotlinexample.utils.ScreenNavigation
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+
 
 class NewMessagePresenter(var newMessageView: NewMessageView, var context: Context) {
 
     val mAuth: FirebaseAuth? = Injector.appComponent?.firebaseAuth()
-    private val firebaseDatabas: FirebaseDatabase? = Injector.appComponent?.firebaseDatabase()
-    private val ref = firebaseDatabas?.getReference("users")
+    private val uidOfCurrentUser = mAuth!!.uid
+
+    private val firebaseDatabase: FirebaseDatabase? = Injector.appComponent?.firebaseDatabase()
+    private val ref = firebaseDatabase?.getReference("users")
+
+
+
     var usersList: ArrayList<User> = arrayListOf()
+
+
+    companion object {
+        var currentUser: User? = null
+    }
 
 
     fun getDataFromfirebaseDatabas(): ArrayList<User> {
@@ -37,5 +43,18 @@ class NewMessagePresenter(var newMessageView: NewMessageView, var context: Conte
             }
         })
         return usersList
+    }
+
+
+    fun getCurrentUser(userList: ArrayList<User>): User{
+
+        for (currentuser123 in userList){
+            if (currentuser123.id == uidOfCurrentUser){
+                currentUser = currentuser123
+                newMessageView.onGetCurrentUser(currentUser!!)
+            }
+
+        }
+            return  currentUser!!
     }
 }

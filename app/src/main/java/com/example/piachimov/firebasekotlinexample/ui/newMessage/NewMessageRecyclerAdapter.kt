@@ -37,8 +37,10 @@ class NewMessageRecyclerAdapter(var context: Context, var picasso: Picasso, var 
         val userPosition = list[p1]
         p0.username_text_view_new_message_screen.text = userPosition.username
         picasso.load(userPosition.profileImageUrl).into(p0.user_image_new_message_screen)
-        p0.username_text_view_new_message_screen.setOnClickListener { view -> ScreenNavigation.switchWithDate(context, ChatActivity::class.java, userPosition)}
+        p0.username_text_view_new_message_screen.setOnClickListener { ScreenNavigation.switchWithDataFromLatestMessageActivity(context, ChatActivity::class.java,newMessagePresenter.getCurrentUser(list).username,userPosition.id, userPosition.username, userPosition.profileImageUrl )}
     }
+
+
 
     override fun getItemCount(): Int {
         return list.size
